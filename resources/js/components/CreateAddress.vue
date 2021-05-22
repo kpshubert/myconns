@@ -13,7 +13,7 @@
           <input type="text" placeholder="City" v-model="address.city" />
         </div>
         <div class="col-md-4">
-          <input type="text" placeholder="ST" v-model="address.st" />
+          <input type="text" placeholder="State" v-model="address.st" />
         </div>
         <div class="col-md-4">
           <input type="text" placeholder="ZIP" v-model="address.zip" />
