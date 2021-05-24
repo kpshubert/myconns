@@ -18,6 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('address', 'App\Http\Controllers\AddressController@store');
-Route::get('address', 'App\Http\Controllers\AddressController@get');
-Route::delete('address/{id}', 'App\Http\Controllers\AddressController@delete');
+Route::post('address', 'AddressController@store');
+Route::get('address', 'AddressController@get');
+Route::delete('address/{id}', 'AddressController@delete');

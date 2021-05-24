@@ -82,7 +82,7 @@
 
                </div>
                <div class="col-md-7">
-                   <address-info></addresses-info>
+                   <addresses></addresses>
 
                </div>
            </div>
