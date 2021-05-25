@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Address</button>
     <h4 class="text-center font-weight-bold">Addresses</h4>
     <table class="table table-striped">
       <thead>
