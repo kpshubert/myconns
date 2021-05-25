@@ -1905,6 +1905,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: "Addresses",
@@ -1935,12 +1944,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['addresses'])), {}, {
     addressesList: function addressesList() {
       return this.$store.state.addresses;
-    },
-    addressCount: function addressCount() {
-      return this.addressesTest.length;
-    },
-    addressListCount: function addressListCount() {
-      return this.$store.getters.addressesTest.length;
     }
   })
 });
@@ -2034,6 +2037,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     createAddress: function createAddress(address) {
       this.$store.dispatch('createAddress', address);
+    },
+    saveAddress: function saveAddress(address) {
+      this.store.dispatch('saveAddress', adddress);
     }
   },
   computed: {
@@ -38612,7 +38618,7 @@ var render = function() {
         attrs: {
           type: "button",
           "data-toggle": "modal",
-          "data-target": "#myModal"
+          "data-target": "#addUpdateModal"
         }
       },
       [_vm._v("Add Address")]
@@ -38644,23 +38650,31 @@ var render = function() {
             _c("td", [_vm._v(_vm._s(addressInfo.country))]),
             _vm._v(" "),
             _c("td", [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-danger",
-                  on: {
-                    click: function($event) {
-                      return _vm.deleteAddress(addressInfo)
-                    }
-                  }
-                },
-                [
-                  _c("i", {
-                    staticClass: "fa fa-trash",
-                    staticStyle: { color: "white" }
-                  })
-                ]
-              )
+              _c("div", { staticClass: "container" }, [
+                _c("div", { staticClass: "row" }, [
+                  _vm._m(1, true),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteAddress(addressInfo)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-trash",
+                          staticStyle: { color: "white" }
+                        })
+                      ]
+                    )
+                  ])
+                ])
+              ])
             ])
           ])
         }),
@@ -38691,6 +38705,26 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Country")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success",
+          attrs: { "data-toggle": "modal", "data-target": "#addUpdateModal" }
+        },
+        [
+          _c("i", {
+            staticClass: "fa fa-edit",
+            staticStyle: { color: "white" }
+          })
+        ]
+      )
+    ])
   }
 ]
 render._withStripped = true
@@ -38717,7 +38751,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "modal fade", attrs: { id: "myModal", role: "dialog" } },
+    {
+      staticClass: "modal fade",
+      attrs: { id: "addUpdateModal", role: "dialog" }
+    },
     [
       _c("div", { staticClass: "modal-dialog" }, [
         _c("div", { staticClass: "modal-content" }, [

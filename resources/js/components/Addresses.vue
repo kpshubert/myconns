@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Add Address</button>
+    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#addUpdateModal">Add Address</button>
     <h4 class="text-center font-weight-bold">Addresses</h4>
     <table class="table table-striped">
       <thead>
@@ -24,7 +24,16 @@
           <td>{{addressInfo.county}}</td>
           <td>{{addressInfo.country}}</td>
           <td>
-            <button class="btn btn-danger" @click="deleteAddress(addressInfo)"><i style="color:white" class="fa fa-trash"></i></button>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn btn-success" data-toggle="modal" data-target="#addUpdateModal"><i style="color:white" class="fa fa-edit"></i></button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn btn-danger" @click="deleteAddress(addressInfo)"><i style="color:white" class="fa fa-trash"></i></button>
+                </div>
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -44,19 +53,13 @@
                 deleteAddress(address) {
                     this.$store.dispatch('deleteAddress',address)
                 }
-            },
+             },
     computed: {
                  ...mapGetters([
                   'addresses'
                 ]),
                 addressesList() {
                   return this.$store.state.addresses
-                },
-                addressCount() {
-                  return this.addressesTest.length
-                },
-                addressListCount() {
-                  return this.$store.getters.addressesTest.length
                 }
             }
         };

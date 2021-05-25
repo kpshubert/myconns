@@ -1,6 +1,6 @@
 <template>
 <!-- Modal -->
-  <div id="myModal" class="modal fade" role="dialog">
+  <div id="addUpdateModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
       <!-- Modal content-->
@@ -75,6 +75,9 @@
     methods: {
                 createAddress(address) {
                     this.$store.dispatch('createAddress', address)
+                },
+                saveAddress(address) {
+                    this.store.dispatch('saveAddress', adddress)
                 }
              },
              computed: {
