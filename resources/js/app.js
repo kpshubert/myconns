@@ -23,7 +23,7 @@ Vue.use(Vuex);
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-Vue.component('create-add-address', require('./components/CreateAddAddress.vue').default);
+Vue.component('create-update-address', require('./components/CreateUpdateAddress.vue').default);
 Vue.component('addresses',require('./components/Addresses.vue').default)
 
 /**
