@@ -25,7 +25,7 @@ let actions = {
       })
   },
   saveAddress({commit}, address) {
-    axios.put('/api/address/', address)
+    axios.put('/api/address/' + address.id, address)
       .then(res => {
         commit('SAVE_ADDRESS', res.data)
       }).catch(err => {

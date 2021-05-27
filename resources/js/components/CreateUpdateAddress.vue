@@ -50,7 +50,7 @@
           <div class="container">
             <div class="row">
               <div class="col-md-6">
-                <button :disabled="!isValid" class="btn btn-block btn-primary" @click.prevent="createAddress(addUpdateAddress)">Submit</button>
+                <button :disabled="!isValid" class="btn btn-block btn-primary" @click.prevent="addOrUpdateAddress(addUpdateAddress)">Submit</button>
               </div
               <div class="col-md-6">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -68,12 +68,13 @@
 
   export default {
     methods: {
-                //createAddress(address) {
-                //    this.$store.dispatch('createAddress', address)
-                //},
-                saveAddress(address) {
+                addOrUpdateAddress(addUpdateAddress) {
+                  if (addUpdateAddress.id === 0) {
+                    this.$store.dispatch('createAddress', addUpdateAddress)
+                  } else {
                     this.$store.dispatch('saveAddress', addUpdateAddress)
-                }
+                  }
+                },
              },
              computed: {
                  isValid() {
@@ -81,21 +82,6 @@
                        && this.addUpdateAddress.zip !== '' && this.addUpdateAddress.county !== '' && this.addUpdateAddress.country !== ''
                  },
                  ...mapGetters(['addUpdateAddress']),
-//                 address() {
-//                      if (addUpdateAddress.Id > 0) {
-//                        return addUpdateAddress
-//                      } else {
-//                        return {
-//                          street1: '',
-//                          street2: '',
-//                          city: '',
-//                          st: '',
-//                          zip: '',
-//                          county: '',
-//                          country: ''
-//                        }
-//                      }
-//                 }
             }
   }
 </script>

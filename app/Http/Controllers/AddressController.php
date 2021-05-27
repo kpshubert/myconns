@@ -29,6 +29,13 @@ class AddressController extends Controller
     return response()->json($address);
   }
 
+  public function update(Request $request, $id)
+  {
+    $address = \App\Models\Address::where('id','=',$id)->first();
+
+    $address->update($request->all());
+  }
+
   public function delete($id)
   {
     \App\Models\Address::destroy($id);

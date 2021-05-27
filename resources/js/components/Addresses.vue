@@ -66,13 +66,13 @@
                 },
                 showUpdateModal(address) {
                   this.$store.dispatch('getUpdateAddress', address)
-                  $('#addUpdateModal').modal('show')
                   $('#txtAddress1').focus()
+                  $('#addUpdateModal').modal('show')
                 },
                 showCreateModal() {
                   this.$store.dispatch('getUpdateAddress', { id: 0, street1: '', street2: '', city: '', st: '', zip: '', county: '', country: ''})
-                  $('#addUpdateModal').modal('show')
                   $('#txtAddress1').focus()
+                  $('#addUpdateModal').modal('show')
                 }
              },
     computed: {

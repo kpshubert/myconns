@@ -1955,8 +1955,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     showUpdateModal: function showUpdateModal(address) {
       this.$store.dispatch('getUpdateAddress', address);
-      $('#addUpdateModal').modal('show');
       $('#txtAddress1').focus();
+      $('#addUpdateModal').modal('show');
     },
     showCreateModal: function showCreateModal() {
       this.$store.dispatch('getUpdateAddress', {
@@ -1969,8 +1969,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         county: '',
         country: ''
       });
-      $('#addUpdateModal').modal('show');
       $('#txtAddress1').focus();
+      $('#addUpdateModal').modal('show');
     }
   },
   computed: _objectSpread(_objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['addresses'])), {}, {
@@ -2068,11 +2068,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   methods: {
-    //createAddress(address) {
-    //    this.$store.dispatch('createAddress', address)
-    //},
-    saveAddress: function saveAddress(address) {
-      this.$store.dispatch('saveAddress', addUpdateAddress);
+    addOrUpdateAddress: function addOrUpdateAddress(addUpdateAddress) {
+      if (addUpdateAddress.id === 0) {
+        this.$store.dispatch('createAddress', addUpdateAddress);
+      } else {
+        this.$store.dispatch('saveAddress', addUpdateAddress);
+      }
     }
   },
   computed: _objectSpread({
@@ -2235,7 +2236,7 @@ var actions = {
   },
   saveAddress: function saveAddress(_ref4, address) {
     var commit = _ref4.commit;
-    axios.put('/api/address/', address).then(function (res) {
+    axios.put('/api/address/' + address.id, address).then(function (res) {
       commit('SAVE_ADDRESS', res.data);
     })["catch"](function (err) {
       console.log(err);
@@ -39073,7 +39074,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          return _vm.createAddress(_vm.addUpdateAddress)
+                          return _vm.addOrUpdateAddress(_vm.addUpdateAddress)
                         }
                       }
                     },

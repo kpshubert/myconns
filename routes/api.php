@@ -21,3 +21,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('address', 'AddressController@store');
 Route::get('address', 'AddressController@get');
 Route::delete('address/{id}', 'AddressController@delete');
+Route::put('address/{id}', 'AddressController@update');

@@ -78,7 +78,7 @@
        <div class="container">
            <div class="row">
              <div class="col-md-12">
-               <Create-update-address></create-update-address>
+               <create-update-address></create-update-address>
            </div>
            <div class="row">
                <div class="col-md-12">
