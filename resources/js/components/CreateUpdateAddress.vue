@@ -70,9 +70,9 @@
     methods: {
                 addOrUpdateAddress(addUpdateAddress) {
                   if (addUpdateAddress.id === 0) {
-                    this.$store.dispatch('createAddress', addUpdateAddress)
+                    this.$store.dispatch('createAddress', addUpdateAddress).then($("#addUpdateModal").modal("toggle"))
                   } else {
-                    this.$store.dispatch('saveAddress', addUpdateAddress)
+                    this.$store.dispatch('saveAddress', addUpdateAddress).then($("#addUpdateModal").modal("toggle"))
                   }
                 },
              },
