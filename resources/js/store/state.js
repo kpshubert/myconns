@@ -1,5 +1,15 @@
 let state = {
-  addresses: []
+  addresses: [],
+  addUpdateAddress: {
+    id: 0,
+    street1: '',
+    street2: '',
+    city: '',
+    st: '',
+    zip: '',
+    county: '',
+    country: ''
+  }
 }
 
 export default state

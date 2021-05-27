@@ -77,11 +77,11 @@
 
        <div class="container">
            <div class="row">
-               <div class="col-md-5">
-                   <create-address></create-address>
-
-               </div>
-               <div class="col-md-7">
+             <div class="col-md-12">
+               <create-update-address></create-update-address>
+           </div>
+           <div class="row">
+               <div class="col-md-12">
                    <addresses></addresses>
 
                </div>

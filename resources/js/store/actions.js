@@ -16,16 +16,24 @@ let actions = {
       })
   },
   deleteAddress({commit}, address) {
-    console.log('Running deleteAddress action')
-    console.log(address.id)
-    axios.delete('/api/address/' + address.id) //${address.id}')
+    axios.delete('/api/address/' + address.id)
       .then(res => {
         if (res.data === 'ok')
         commit('DELETE_ADDRESS', address)
       }).catch(err => {
         console.log(err)
       })
-    console.log('Completed deletAddress action')
+  },
+  saveAddress({commit}, address) {
+    axios.put('/api/address/' + address.id, address)
+      .then(res => {
+        commit('SAVE_ADDRESS', res.data)
+      }).catch(err => {
+        console.log(err)
+      })
+  },
+  getUpdateAddress({commit}, address) {
+    commit('GET_UPDATE_ADDRESS', address)
   }
 }
 

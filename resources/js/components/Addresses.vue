@@ -1,5 +1,6 @@
 <template>
   <div>
+    <button type="button" class="btn btn-info btn-lg" @click="showCreateModal()">Add Address</button>
     <h4 class="text-center font-weight-bold">Addresses</h4>
     <table class="table table-striped">
       <thead>
@@ -23,7 +24,16 @@
           <td>{{addressInfo.county}}</td>
           <td>{{addressInfo.country}}</td>
           <td>
-            <button class="btn btn-danger" @click="deleteAddress(addressInfo)"><i style="color:white" class="fa fa-trash"></i></button>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <button class="btn btn-success" @click="showUpdateModal(addressInfo)"><i style="color:white" class="fa fa-edit"></i></button>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn btn-danger" @click="deleteAddress(addressInfo)"><i style="color:white" class="fa fa-trash"></i></button>
+                </div>
+              </div>
+            </div>
           </td>
         </tr>
       </tbody>
@@ -39,23 +49,38 @@
     async mounted() {
                 await this.$store.dispatch('fetchAddresses')
               },
+    data() {
+      return { addAddress: {
+        street1: '',
+        street2: '',
+        city: '',
+        st: '',
+        zip: '',
+        county: '',
+        country: ''}
+      }
+    },
     methods: {
                 deleteAddress(address) {
                     this.$store.dispatch('deleteAddress',address)
+                },
+                showUpdateModal(address) {
+                  this.$store.dispatch('getUpdateAddress', address)
+                  $('#txtAddress1').focus()
+                  $('#addUpdateModal').modal('show')
+                },
+                showCreateModal() {
+                  this.$store.dispatch('getUpdateAddress', { id: 0, street1: '', street2: '', city: '', st: '', zip: '', county: '', country: ''})
+                  $('#txtAddress1').focus()
+                  $('#addUpdateModal').modal('show')
                 }
-            },
+             },
     computed: {
                  ...mapGetters([
                   'addresses'
                 ]),
                 addressesList() {
                   return this.$store.state.addresses
-                },
-                addressCount() {
-                  return this.addressesTest.length
-                },
-                addressListCount() {
-                  return this.$store.getters.addressesTest.length
                 }
             }
         };
