@@ -1909,14 +1909,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1985,19 +1977,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     deleteAddress: function deleteAddress(address) {
-      //let deleteAddressObj = addresses.findIndex(item => item.id === addressIndex)
       this.$store.dispatch('deleteAddress', address);
     },
     showUpdateModal: function showUpdateModal(address) {
-      console.log('address');
-      console.log(address); //let useAddress = addresses.findIndex(item => item.id === addressIndex)
-      //console.log('useAddress')
-      //console.log(useAddress)
-
       this.$store.dispatch('getUpdateAddress', address);
       $('#txtAddress1').focus();
       $('#addUpdateModal').modal('show');
-      console.log('update modal should have been shown');
     },
     showCreateModal: function showCreateModal() {
       this.$store.dispatch('getUpdateAddress', {
@@ -48995,21 +48980,11 @@ var render = function() {
             "fixed-header": true,
             "pagination-options": {
               enabled: true,
-              mode: "records",
+              mode: "pages",
               perPage: 10,
               position: "top",
               perPageDropdown: [5, 10, 20, 30, 40, 50, 75, 100],
-              dropdownAllowAll: true,
-              setCurrentPage: 2,
-              nextLabel: "next",
-              prevLabel: "prev",
-              rowsPerPageLabel: "Rows per page",
-              ofLabel: "of",
-              pageLabel: "page", // for 'pages' mode
-              allLabel: "All",
-              infoFn: function(params) {
-                return "my own page " + params.firstRecordOnPage
-              }
+              dropdownAllowAll: true
             }
           },
           scopedSlots: _vm._u([
