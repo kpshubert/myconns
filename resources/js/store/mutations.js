@@ -14,10 +14,7 @@ let mutations = {
     state.addresses[index] = address
   },
   GET_UPDATE_ADDRESS(state, address) {
-    console.log('Running mutation GET_UPDATE_ADDRESS')
     state.addUpdateAddress = address
-    console.log('Mutation complete, value is:')
-    console.log(state.addUpdateAddress)
   }
 }
 export default mutations

@@ -33,6 +33,7 @@
         "vuex": "^3.6.2"
     },
     "dependencies": {
+        "vue-good-table": "^2.21.10",
         "vueloader": "^0.0.3"
     }
 }

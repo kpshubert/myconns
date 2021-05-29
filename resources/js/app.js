@@ -7,12 +7,12 @@
 require('./bootstrap');
 
 window.Vue = require('vue').default;
-
+import VueGoodTable from 'vue-good-table';
 import Vuex from 'vuex';
 import store from './store/index'
 Vue.use(Vuex);
 
-
+import 'vue-good-table/dist/vue-good-table.css';
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -21,10 +21,12 @@ Vue.use(Vuex);
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
 
+Vue.use('VueGoodTable');
+
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 Vue.component('create-update-address', require('./components/CreateUpdateAddress.vue').default);
-Vue.component('addresses',require('./components/Addresses.vue').default)
+Vue.component('addresses',require('./components/Addresses.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
