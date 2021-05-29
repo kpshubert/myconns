@@ -104,19 +104,12 @@
     },
     methods: {
                 deleteAddress(address) {
-                    //let deleteAddressObj = addresses.findIndex(item => item.id === addressIndex)
                     this.$store.dispatch('deleteAddress', address)
                 },
                 showUpdateModal(address) {
-                  console.log('address')
-                  console.log(address)
-                  //let useAddress = addresses.findIndex(item => item.id === addressIndex)
-                  //console.log('useAddress')
-                  //console.log(useAddress)
                   this.$store.dispatch('getUpdateAddress', address)
                   $('#txtAddress1').focus()
                   $('#addUpdateModal').modal('show')
-                  console.log('update modal should have been shown')
                 },
                 showCreateModal() {
                   this.$store.dispatch('getUpdateAddress', { id: 0, street1: '', street2: '', city: '', st: '', zip: '', county: '', country: ''})
