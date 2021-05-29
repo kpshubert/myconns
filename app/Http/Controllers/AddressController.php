@@ -14,6 +14,9 @@ class AddressController extends Controller
   public function get(Request $request)
   {
     $addresses = \App\Models\Address::orderBy('created_at', 'desc')->get();
+    foreach ($addresses as $address => $address_value) {
+      $address_value->buttonSet = $address_value->id;
+    }
     return response()->json($addresses);
   }
 
