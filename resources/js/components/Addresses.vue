@@ -9,19 +9,11 @@
         :fixed-header="true"
         :pagination-options="{
               enabled: true,
-              mode: 'records',
+              mode: 'pages',
               perPage: 10,
               position: 'top',
               perPageDropdown: [5, 10, 20, 30, 40, 50, 75, 100],
-              dropdownAllowAll: true,
-              setCurrentPage: 2,
-              nextLabel: 'next',
-              prevLabel: 'prev',
-              rowsPerPageLabel: 'Rows per page',
-              ofLabel: 'of',
-              pageLabel: 'page', // for 'pages' mode
-              allLabel: 'All',
-              infoFn: (params) => `my own page ${params.firstRecordOnPage}`,
+              dropdownAllowAll: true
             }">
         <template slot="table-row" slot-scope="props">
             <span v-if="props.column.field == 'buttonSet'">
