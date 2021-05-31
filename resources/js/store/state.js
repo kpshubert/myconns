@@ -8,7 +8,9 @@ let state = {
     st: '',
     zip: '',
     county: '',
-    country: ''
+    country: '',
+    effectivedate: '',
+    enddate: ''
   }
 }
 

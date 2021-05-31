@@ -43,6 +43,14 @@
                   <input id='txtCountry' type="Text" placeholder="Country"  v-model="addUpdateAddress.country" class="form-control"/>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <VueCtkDateTimePicker v-model="addUpdateAddress.effectivedate" dark></VueCtkDateTimePicker>
+                </div>
+                <div class="col-md-6">
+                  <VueCtkDateTimePicker v-model="addUpdateAddress.enddate" dark></VueCtkDateTimePicker>
+                </div>
+              </div>
             </div>
           </div>
         </div>
