@@ -34,9 +34,22 @@ class AddressController extends Controller
 
   public function update(Request $request, $id)
   {
-    $address = \App\Models\Address::where('id','=',$id)->first();
+    $saveData = $request->all();
 
-    $address->update($request->all());
+    $address = \App\Models\Address::where('id','=',$id)->first();
+    if (isset($request->effectivedate) && (strpos($request->effectivedate, 'a') !== false || strpos($request->effectivedate, 'p') !== false)) {
+      $effectiveDate = date_create_from_format('Y-m-d G:i a', $request->effectivedate);
+      $effectiveDateString = date_format($effectiveDate, "Y-m-d H:i:s");
+      $saveData['effectivedate'] = $effectiveDateString;
+    }
+
+    if (isset($request->enddate) && (strpos($request->enddate, 'a') !== false || strpos($request->enddate, 'p') !== false)) {
+      $endDate = date_create_from_format('Y-m-d G:i a', $request->enddate);
+      $endDateString = date_format($endDate, "Y-m-d H:i:s");
+      $saveData['enddate'] = $endDateString;
+    }
+
+    $address->update($saveData);
   }
 
   public function delete($id)
