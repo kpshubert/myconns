@@ -75479,7 +75479,7 @@ var render = function() {
       attrs: { id: "addUpdateModal", role: "dialog" }
     },
     [
-      _c("div", { staticClass: "modal-dialog" }, [
+      _c("div", { staticClass: "modal-dialog modal-lg" }, [
         _c("div", { staticClass: "modal-content" }, [
           _vm._m(0),
           _vm._v(" "),
