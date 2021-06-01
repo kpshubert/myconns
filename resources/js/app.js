@@ -27,8 +27,10 @@ import 'vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css';/**
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('create-update-address', require('./components/CreateUpdateAddress.vue').default);
-Vue.component('addresses',require('./components/Addresses.vue').default);
+Vue.component('create-update-address', require('./components/addresses/CreateUpdateAddress.vue').default);
+Vue.component('addresses', require('./components/addresses/Addresses.vue').default);
+Vue.component('circles', require('./components/admin/circles/Circles.vue').default);
+Vue.component('create-update-circle', require('./components/admin/circles/CreateUpdateCircle.vue').default);
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
 //Vue.component('VueGoodTable', VueGoodTable);
 /**
