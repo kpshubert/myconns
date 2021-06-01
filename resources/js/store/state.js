@@ -11,6 +11,13 @@ let state = {
     country: '',
     effectivedate: '',
     enddate: ''
+  },
+  circles: [],
+  addUpdateCircle: {
+    id: 0,
+    circle_level: 0,
+    name: '',
+    description: ''
   }
 }
 

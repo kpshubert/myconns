@@ -23,6 +23,8 @@ Route::get('/dashboard', function () {
 
 Route::get('/addresses', 'AddressController@index')->middleware(['auth'])->name('addresses');
 
+Route::get('/admin/circles', 'CircleController@index')->middleware('auth')->name('circles');
+
 require __DIR__.'/auth.php';
 
 Auth::routes();

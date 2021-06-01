@@ -22,3 +22,9 @@ Route::post('address', 'AddressController@store');
 Route::get('address', 'AddressController@get');
 Route::delete('address/{id}', 'AddressController@delete');
 Route::put('address/{id}', 'AddressController@update');
+
+
+Route::post('circle', 'CircleController@store');
+Route::get('circle', 'CircleController@get');
+Route::delete('circle/{id}', 'CircleController@delete');
+Route::put('circle/{id}', 'CircleController@update');
