@@ -1,7 +1,7 @@
 <template>
 <!-- Modal -->
   <div id="addUpdateModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
 
       <!-- Modal content-->
       <div class="modal-content">
@@ -41,6 +41,37 @@
               <div class="row">
                 <div class="col-md-12">
                   <input id='txtCountry' type="Text" placeholder="Country"  v-model="addUpdateAddress.country" class="form-control"/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <br/>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p>Effective Date</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <VueCtkDateTimePicker v-model="addUpdateAddress.effectivedate" dark></VueCtkDateTimePicker>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p>End Date</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <VueCtkDateTimePicker v-model="addUpdateAddress.enddate" dark></VueCtkDateTimePicker>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

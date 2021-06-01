@@ -16,6 +16,8 @@ class Address extends Model
                            'zip',
                            'county',
                            'country',
-                           'userid'
+                           'userid',
+                           'effectivedate',
+                           'enddate'
                          ];
 }
