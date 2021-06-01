@@ -2095,6 +2095,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   methods: {
@@ -75716,42 +75739,60 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-md-6" },
-                    [
-                      _c("VueCtkDateTimePicker", {
-                        attrs: { dark: "" },
-                        model: {
-                          value: _vm.addUpdateAddress.effectivedate,
-                          callback: function($$v) {
-                            _vm.$set(_vm.addUpdateAddress, "effectivedate", $$v)
-                          },
-                          expression: "addUpdateAddress.effectivedate"
-                        }
-                      })
-                    ],
-                    1
-                  ),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col-md-12" },
+                        [
+                          _c("VueCtkDateTimePicker", {
+                            attrs: { dark: "" },
+                            model: {
+                              value: _vm.addUpdateAddress.effectivedate,
+                              callback: function($$v) {
+                                _vm.$set(
+                                  _vm.addUpdateAddress,
+                                  "effectivedate",
+                                  $$v
+                                )
+                              },
+                              expression: "addUpdateAddress.effectivedate"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ]),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col-md-6" },
-                    [
-                      _c("VueCtkDateTimePicker", {
-                        attrs: { dark: "" },
-                        model: {
-                          value: _vm.addUpdateAddress.enddate,
-                          callback: function($$v) {
-                            _vm.$set(_vm.addUpdateAddress, "enddate", $$v)
-                          },
-                          expression: "addUpdateAddress.enddate"
-                        }
-                      })
-                    ],
-                    1
-                  )
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col-md-12" },
+                        [
+                          _c("VueCtkDateTimePicker", {
+                            attrs: { dark: "" },
+                            model: {
+                              value: _vm.addUpdateAddress.enddate,
+                              callback: function($$v) {
+                                _vm.$set(_vm.addUpdateAddress, "enddate", $$v)
+                              },
+                              expression: "addUpdateAddress.enddate"
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
+                  ])
                 ])
               ])
             ])
@@ -75809,6 +75850,32 @@ var staticRenderFns = [
         },
         [_vm._v("×")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [_c("br")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("p", [_vm._v("Effective Date")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [_c("p", [_vm._v("End Date")])])
     ])
   }
 ]

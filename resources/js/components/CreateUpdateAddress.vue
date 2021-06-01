@@ -44,11 +44,34 @@
                 </div>
               </div>
               <div class="row">
+                <div class="col-md-12">
+                  <br/>
+                </div>
+              </div>
+              <div class="row">
                 <div class="col-md-6">
-                  <VueCtkDateTimePicker v-model="addUpdateAddress.effectivedate" dark></VueCtkDateTimePicker>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p>Effective Date</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <VueCtkDateTimePicker v-model="addUpdateAddress.effectivedate" dark></VueCtkDateTimePicker>
+                    </div>
+                  </div>
                 </div>
                 <div class="col-md-6">
-                  <VueCtkDateTimePicker v-model="addUpdateAddress.enddate" dark></VueCtkDateTimePicker>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <p>End Date</p>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <VueCtkDateTimePicker v-model="addUpdateAddress.enddate" dark></VueCtkDateTimePicker>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
