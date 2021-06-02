@@ -46,8 +46,6 @@ let actions = {
     async fetchCircles({commit}) {
       await axios.get('/api/circle')
       .then(res => {
-        console.log("res.data")
-        console.log(res.data)
         commit('FETCH_CIRCLES', res.data)
       }).catch(err => {
         console.log(err)
@@ -72,6 +70,9 @@ let actions = {
     },
     getUpdateCircle({commit}, circle) {
       commit('GET_UPDATE_CIRCLE', circle)
+    },
+    changeCircleSelect({commit}, args) {
+      commit('CHANGE_CIRCLE_SELECT', [args[0], args[1]])
     }
 }
 

@@ -32,6 +32,12 @@ let mutations = {
   },
   GET_UPDATE_CIRCLE(state, circle) {
     state.addUpdateCircle = circle
+  },
+  CHANGE_CIRCLE_SELECT(state, args) {
+    let addressIndex = state.addresses.findIndex(item => item.id === args[0])
+    let circleIndex = state.circles.findIndex(item => item.circle_level === args[1])
+    let circle_info = state.circles[circleIndex].circle_info
+    state.addresses[addressIndex].circle_info = circle_info
   }
 }
 export default mutations

@@ -50,6 +50,17 @@
               </div>
               <div class="row">
                 <div class="col-md-6">
+                  Circle:
+                </div>
+                <div class="col-md-6">
+                  <select v-model="addUpdateAddress.highestcircle" @change="changeCircleSelect(addUpdateAddress.id, addUpdateAddress.highestcircle)">
+                    <option v-for="circle in circles" :value="circle.circle_level">{{circle.circle_info}}</option>
+                  </select>
+                  <hr>Current HighestCircle: {{addUpdateAddress.highestcircle}}
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
                   <div class="row">
                     <div class="col-md-12">
                       <p>Effective Date</p>
@@ -98,6 +109,9 @@
   import { mapGetters } from 'vuex'
 
   export default {
+    async mounted() {
+      await this.$store.dispatch('fetchCircles')
+    },
     methods: {
                 addOrUpdateAddress(addUpdateAddress) {
                   if (addUpdateAddress.id === 0) {
@@ -106,13 +120,16 @@
                     this.$store.dispatch('saveAddress', addUpdateAddress).then($("#addUpdateModal").modal("toggle"))
                   }
                 },
+                changeCircleSelect(addUpdateAddressId, circleId) {
+                  this.$store.dispatch('changeCircleSelect', [addUpdateAddressId, circleId])
+                }
              },
              computed: {
                  isValid() {
                      return this.addUpdateAddress.street1 !== '' && this.addUpdateAddress.street2 !== '' && this.addUpdateAddress.city !== '' && this.addUpdateAddress.st !== ''
                        && this.addUpdateAddress.zip !== '' && this.addUpdateAddress.county !== '' && this.addUpdateAddress.country !== ''
                  },
-                 ...mapGetters(['addUpdateAddress']),
+                 ...mapGetters(['addUpdateAddress', 'circles']),
             }
   }
 </script>

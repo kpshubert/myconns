@@ -54,6 +54,7 @@
         city: '',
         st: '',
         zip: '',
+        highestcircle: 0,
         county: '',
         country: ''},
       rows: [],
@@ -85,6 +86,10 @@
         {
           label: 'Country',
           field: 'country'
+        },
+        {
+          label: 'Circle Level',
+          field: 'circle_info'
         },
         {
           label: 'Actions',
