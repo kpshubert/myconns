@@ -56,7 +56,6 @@
                   <select v-model="addUpdateAddress.highestcircle" @change="changeCircleSelect(addUpdateAddress.id, addUpdateAddress.highestcircle)">
                     <option v-for="circle in circles" :value="circle.circle_level">{{circle.circle_info}}</option>
                   </select>
-                  <hr>Current HighestCircle: {{addUpdateAddress.highestcircle}}
                 </div>
               </div>
               <div class="row">

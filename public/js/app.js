@@ -2140,7 +2140,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   mounted: function mounted() {
@@ -76311,13 +76310,6 @@ var render = function() {
                         )
                       }),
                       0
-                    ),
-                    _vm._v(" "),
-                    _c("hr"),
-                    _vm._v(
-                      "Current HighestCircle: " +
-                        _vm._s(_vm.addUpdateAddress.highestcircle) +
-                        "\n                "
                     )
                   ])
                 ]),
