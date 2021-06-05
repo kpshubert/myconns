@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use DB;
+
 class CircleController extends Controller
 {
   public function index()
@@ -14,7 +16,8 @@ class CircleController extends Controller
     //
   public function get(Request $request)
   {
-    $circles = \App\Models\Circle::orderBy('circle_level', 'asc')->get();
+
+    $circles = \App\Models\Circle::select('*', DB::raw("CONCAT(circle_level, '-', name) AS circle_info"))->orderBy('circle_level', 'asc')->get();
     foreach ($circles as $circle => $circle_value) {
       $circle_value->buttonSet = $circle_value->id;
     }

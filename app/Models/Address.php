@@ -18,6 +18,7 @@ class Address extends Model
                            'country',
                            'userid',
                            'effectivedate',
-                           'enddate'
+                           'enddate',
+                           'highestcircle'
                          ];
 }

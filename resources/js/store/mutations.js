@@ -16,6 +16,21 @@ let mutations = {
   GET_UPDATE_ADDRESS(state, address) {
     state.addUpdateAddress = address
   },
+  COPY_ADDRESS_FOR_REVERT(state, address) {
+    state.revertAddress = address
+  },
+  REVERT_ADDRESS(state, address) {
+    address.street1 = state.revertAddress.street1
+    address.street2 = state.revertAddress.street2
+    address.city = state.revertAddress.city
+    address.st = state.revertAddress.st
+    address.zip = state.revertAddress.zip
+    address.county = state.revertAddress.county
+    address.highestcricle = state.revertAddress.highestcricle
+    address.circle_info = state.revertAddress.circle_info
+    address.effectivedate = state.revertAddress.effectivedate
+    address.enddate = state.revertAddress.enddate
+  },
   CREATE_CIRCLE(state, circle) {
     state.circles.unshift(circle)
   },
@@ -32,6 +47,11 @@ let mutations = {
   },
   GET_UPDATE_CIRCLE(state, circle) {
     state.addUpdateCircle = circle
+  },
+  CHANGE_CIRCLE_SELECT(state, addOrUpdateAddress) {
+    let circleIndex = state.circles.findIndex(item => item.circle_level === addOrUpdateAddress.highestcricle)
+    let circle_info = state.circles[circleIndex].circle_info
+    addOrUpdateAddress.circle_info = circle_info
   }
 }
 export default mutations

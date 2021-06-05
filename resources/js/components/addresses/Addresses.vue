@@ -54,6 +54,7 @@
         city: '',
         st: '',
         zip: '',
+        highestcircle: 0,
         county: '',
         country: ''},
       rows: [],
@@ -87,6 +88,10 @@
           field: 'country'
         },
         {
+          label: 'Circle Level',
+          field: 'circle_info'
+        },
+        {
           label: 'Actions',
           field: 'buttonSet',
           sortable: false
@@ -99,6 +104,9 @@
                     this.$store.dispatch('deleteAddress', address)
                 },
                 showUpdateModal(address) {
+                  console.log('running copyAddressForRevert')
+                  this.$store.dispatch('copyAddressForRevert', address)
+                  console.log('ran copyAddressForRevert')
                   this.$store.dispatch('getUpdateAddress', address)
                   $('#txtAddress1').focus()
                   $('#addUpdateModal').modal('show')

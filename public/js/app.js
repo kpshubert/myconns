@@ -1943,6 +1943,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         city: '',
         st: '',
         zip: '',
+        highestcircle: 0,
         county: '',
         country: ''
       },
@@ -1969,6 +1970,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         label: 'Country',
         field: 'country'
       }, {
+        label: 'Circle Level',
+        field: 'circle_info'
+      }, {
         label: 'Actions',
         field: 'buttonSet',
         sortable: false
@@ -1980,6 +1984,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$store.dispatch('deleteAddress', address);
     },
     showUpdateModal: function showUpdateModal(address) {
+      console.log('running copyAddressForRevert');
+      this.$store.dispatch('copyAddressForRevert', address);
+      console.log('ran copyAddressForRevert');
       this.$store.dispatch('getUpdateAddress', address);
       $('#txtAddress1').focus();
       $('#addUpdateModal').modal('show');
@@ -2015,13 +2022,31 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2120,6 +2145,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  mounted: function mounted() {
+    var _this = this;
+
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _this.$store.dispatch('fetchCircles');
+
+            case 2:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
   methods: {
     addOrUpdateAddress: function addOrUpdateAddress(addUpdateAddress) {
       if (addUpdateAddress.id === 0) {
@@ -2127,13 +2171,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else {
         this.$store.dispatch('saveAddress', addUpdateAddress).then($("#addUpdateModal").modal("toggle"));
       }
+    },
+    changeCircleSelect: function changeCircleSelect(addUpdateAddress) {
+      this.$store.dispatch('changeCircleSelect', addUpdateAddress);
+    },
+    cancelChange: function cancelChange(addUpdateAddress) {
+      console.log('Running cancelChange');
+      console.log('addUpdateAddress');
+      console.log(addUpdateAddress);
+      this.$store.dispatch('revertAddress', addUpdateAddress);
+      $("#addUpdateModal").modal("toggle");
+      console.log('cancelChange complete');
     }
   },
   computed: _objectSpread({
     isValid: function isValid() {
       return this.addUpdateAddress.street1 !== '' && this.addUpdateAddress.street2 !== '' && this.addUpdateAddress.city !== '' && this.addUpdateAddress.st !== '' && this.addUpdateAddress.zip !== '' && this.addUpdateAddress.county !== '' && this.addUpdateAddress.country !== '';
     }
-  }, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['addUpdateAddress']))
+  }, (0,vuex__WEBPACK_IMPORTED_MODULE_1__.mapGetters)(['addUpdateAddress', 'circles']))
 });
 
 /***/ }),
@@ -2541,26 +2596,39 @@ var actions = {
     var commit = _ref5.commit;
     commit('GET_UPDATE_ADDRESS', address);
   },
-  createCircle: function createCircle(_ref6, circle) {
+  copyAddressForRevert: function copyAddressForRevert(_ref6, address) {
     var commit = _ref6.commit;
+    console.log('copyAddressForRevert');
+    console.log('address');
+    console.log(address);
+    var JSONString = JSON.stringify(address);
+    var JSONObj = JSON.parse(JSONString);
+    console.log('JSONObj');
+    console.log(JSONObj);
+    commit('COPY_ADDRESS_FOR_REVERT', JSONObj);
+  },
+  revertAddress: function revertAddress(_ref7, address) {
+    var commit = _ref7.commit;
+    commit('REVERT_ADDRESS', address);
+  },
+  createCircle: function createCircle(_ref8, circle) {
+    var commit = _ref8.commit;
     axios.post('/api/circle', circle).then(function (res) {
       commit('CREATE_CIRCLE', res.data);
     })["catch"](function (err) {
       console.log(err);
     });
   },
-  fetchCircles: function fetchCircles(_ref7) {
+  fetchCircles: function fetchCircles(_ref9) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
       var commit;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              commit = _ref7.commit;
+              commit = _ref9.commit;
               _context2.next = 3;
               return axios.get('/api/circle').then(function (res) {
-                console.log("res.data");
-                console.log(res.data);
                 commit('FETCH_CIRCLES', res.data);
               })["catch"](function (err) {
                 console.log(err);
@@ -2574,25 +2642,29 @@ var actions = {
       }, _callee2);
     }))();
   },
-  deleteCircle: function deleteCircle(_ref8, circle) {
-    var commit = _ref8.commit;
+  deleteCircle: function deleteCircle(_ref10, circle) {
+    var commit = _ref10.commit;
     axios["delete"]('/api/circle/' + circle.id).then(function (res) {
       if (res.data === 'ok') commit('DELETE_CIRCLE', circle);
     })["catch"](function (err) {
       console.log(err);
     });
   },
-  saveCircle: function saveCircle(_ref9, circle) {
-    var commit = _ref9.commit;
+  saveCircle: function saveCircle(_ref11, circle) {
+    var commit = _ref11.commit;
     axios.put('/api/circle/' + circle.id, circle).then(function (res) {
       commit('SAVE_CIRCLE', res.data);
     })["catch"](function (err) {
       console.log(err);
     });
   },
-  getUpdateCircle: function getUpdateCircle(_ref10, circle) {
-    var commit = _ref10.commit;
+  getUpdateCircle: function getUpdateCircle(_ref12, circle) {
+    var commit = _ref12.commit;
     commit('GET_UPDATE_CIRCLE', circle);
+  },
+  changeCircleSelect: function changeCircleSelect(_ref13, addOrUpdateAddress) {
+    var commit = _ref13.commit;
+    commit('CHANGE_CIRCLE_SELECT', addOrUpdateAddress);
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (actions);
@@ -2694,6 +2766,24 @@ var mutations = {
   GET_UPDATE_ADDRESS: function GET_UPDATE_ADDRESS(state, address) {
     state.addUpdateAddress = address;
   },
+  COPY_ADDRESS_FOR_REVERT: function COPY_ADDRESS_FOR_REVERT(state, address) {
+    console.log('COPY_ADDRESS_FOR_REVERT');
+    console.log('address');
+    console.log(address);
+    state.revertAddress = address;
+  },
+  REVERT_ADDRESS: function REVERT_ADDRESS(state, address) {
+    address.street1 = state.revertAddress.street1;
+    address.street2 = state.revertAddress.street2;
+    address.city = state.revertAddress.city;
+    address.st = state.revertAddress.st;
+    address.zip = state.revertAddress.zip;
+    address.county = state.revertAddress.county;
+    address.highestcricle = state.revertAddress.highestcricle;
+    address.circle_info = state.revertAddress.circle_info;
+    address.effectivedate = state.revertAddress.effectivedate;
+    address.enddate = state.revertAddress.enddate;
+  },
   CREATE_CIRCLE: function CREATE_CIRCLE(state, circle) {
     state.circles.unshift(circle);
   },
@@ -2714,6 +2804,14 @@ var mutations = {
   },
   GET_UPDATE_CIRCLE: function GET_UPDATE_CIRCLE(state, circle) {
     state.addUpdateCircle = circle;
+  },
+  CHANGE_CIRCLE_SELECT: function CHANGE_CIRCLE_SELECT(state, addOrUpdateAddress) {
+    //let addressIndex = state.addresses.findIndex(item => item.id === args[0])
+    var circleIndex = state.circles.findIndex(function (item) {
+      return item.circle_level === addOrUpdateAddress.highestcricle;
+    });
+    var circle_info = state.circles[circleIndex].circle_info;
+    addOrUpdateAddress.circle_info = circle_info;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (mutations);
@@ -2743,7 +2841,21 @@ var state = {
     county: '',
     country: '',
     effectivedate: '',
-    enddate: ''
+    enddate: '',
+    highestcircle: 0
+  },
+  revertAddress: {
+    id: 0,
+    street1: '',
+    street2: '',
+    city: '',
+    st: '',
+    zip: '',
+    county: '',
+    country: '',
+    effectivedate: '',
+    enddate: '',
+    highestcircle: 0
   },
   circles: [],
   addUpdateCircle: {
@@ -76203,6 +76315,62 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-6" }, [
+                    _vm._v("\n                  Circle:\n                ")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.addUpdateAddress.highestcircle,
+                            expression: "addUpdateAddress.highestcircle"
+                          }
+                        ],
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.addUpdateAddress,
+                                "highestcircle",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            },
+                            function($event) {
+                              return _vm.changeCircleSelect(
+                                _vm.addUpdateAddress
+                              )
+                            }
+                          ]
+                        }
+                      },
+                      _vm._l(_vm.circles, function(circle) {
+                        return _c(
+                          "option",
+                          { domProps: { value: circle.circle_level } },
+                          [_vm._v(_vm._s(circle.circle_info))]
+                        )
+                      }),
+                      0
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-6" }, [
                     _vm._m(2),
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
@@ -76281,8 +76449,13 @@ var render = function() {
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-default",
-                    attrs: { type: "button", "data-dismiss": "modal" }
+                    staticClass: "btn btn-block btn-default",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.cancelChange(_vm.addUpdateAddress)
+                      }
+                    }
                   },
                   [_vm._v("Close")]
                 )

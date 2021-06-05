@@ -50,6 +50,16 @@
               </div>
               <div class="row">
                 <div class="col-md-6">
+                  Circle:
+                </div>
+                <div class="col-md-6">
+                  <select v-model="addUpdateAddress.highestcircle" @change="changeCircleSelect(addUpdateAddress)">
+                    <option v-for="circle in circles" :value="circle.circle_level">{{circle.circle_info}}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
                   <div class="row">
                     <div class="col-md-12">
                       <p>Effective Date</p>
@@ -84,7 +94,7 @@
                 <button :disabled="!isValid" class="btn btn-block btn-primary" @click.prevent="addOrUpdateAddress(addUpdateAddress)">Submit</button>
               </div
               <div class="col-md-6">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-block btn-default" @click="cancelChange(addUpdateAddress)">Close</button>
               </div>
             </div>
           </div>
@@ -98,6 +108,9 @@
   import { mapGetters } from 'vuex'
 
   export default {
+    async mounted() {
+      await this.$store.dispatch('fetchCircles')
+    },
     methods: {
                 addOrUpdateAddress(addUpdateAddress) {
                   if (addUpdateAddress.id === 0) {
@@ -106,13 +119,20 @@
                     this.$store.dispatch('saveAddress', addUpdateAddress).then($("#addUpdateModal").modal("toggle"))
                   }
                 },
+                changeCircleSelect(addUpdateAddress) {
+                  this.$store.dispatch('changeCircleSelect', addUpdateAddress)
+                },
+                cancelChange(addUpdateAddress) {
+                  this.$store.dispatch('revertAddress', addUpdateAddress)
+                  $("#addUpdateModal").modal("toggle")
+                },
              },
              computed: {
                  isValid() {
                      return this.addUpdateAddress.street1 !== '' && this.addUpdateAddress.street2 !== '' && this.addUpdateAddress.city !== '' && this.addUpdateAddress.st !== ''
                        && this.addUpdateAddress.zip !== '' && this.addUpdateAddress.county !== '' && this.addUpdateAddress.country !== ''
                  },
-                 ...mapGetters(['addUpdateAddress']),
+                 ...mapGetters(['addUpdateAddress', 'circles']),
             }
   }
 </script>

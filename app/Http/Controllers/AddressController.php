@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use DB;
+
 class AddressController extends Controller
 {
   public function index()
@@ -14,7 +16,7 @@ class AddressController extends Controller
     //
   public function get(Request $request)
   {
-    $addresses = \App\Models\Address::orderBy('created_at', 'desc')->get();
+    $addresses = DB::table('addresses')->leftJoin('circles', 'circles.circle_level', '=', 'highestcircle')->select('addresses.*', DB::raw("CONCAT(addresses.highestcircle, '-', circles.name) AS circle_info"))->get();
     foreach ($addresses as $address => $address_value) {
       $address_value->buttonSet = $address_value->id;
     }
@@ -24,8 +26,6 @@ class AddressController extends Controller
   public function store(Request $request)
   {
     $requestdata = $request;
-    Log::debug('$request->user');
-    Log::debug($request->user());
     $owner = Auth::id();
     $requestdata->owner = $owner;
     $address = \App\Models\Address::create($requestdata->all());
@@ -37,6 +37,8 @@ class AddressController extends Controller
     $saveData = $request->all();
 
     $address = \App\Models\Address::where('id','=',$id)->first();
+    Log::debug('$saveData->highestcircle');
+    Log::debug($saveData['highestcircle']);
     if (isset($request->effectivedate) && (strpos($request->effectivedate, 'a') !== false || strpos($request->effectivedate, 'p') !== false)) {
       $effectiveDate = date_create_from_format('Y-m-d G:i a', $request->effectivedate);
       $effectiveDateString = date_format($effectiveDate, "Y-m-d H:i:s");
