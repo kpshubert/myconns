@@ -101,14 +101,20 @@
     },
     methods: {
                 deleteAddress(address) {
-                    this.$store.dispatch('deleteAddress', address)
+                    this.$store.dispatch('deleteRecord', false)
+                    $('#deleteConfirmModal').modal('show')
+                    console.log('Run on')
+                    if (deleteRecord) {
+                        this.$store.dispatch('deleteAddress', address)
+                    }
+                    console.log('deleteAddress got here')
                 },
                 showUpdateModal(address) {
-                  console.log('running copyAddressForRevert')
+                  this.$store.dispatch('setSaveClicked', false)
                   this.$store.dispatch('copyAddressForRevert', address)
-                  console.log('ran copyAddressForRevert')
                   this.$store.dispatch('getUpdateAddress', address)
                   $('#txtAddress1').focus()
+                  $('#addUpdateModal').modal({backdrop: 'static', keyboard: false})
                   $('#addUpdateModal').modal('show')
                 },
                 showCreateModal() {
@@ -119,7 +125,8 @@
              },
     computed: {
                  ...mapGetters([
-                  'addresses'
+                  'addresses',
+                  'deleteRecord'
                 ])
             }
         };

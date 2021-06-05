@@ -1981,14 +1981,25 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     deleteAddress: function deleteAddress(address) {
-      this.$store.dispatch('deleteAddress', address);
+      this.$store.dispatch('deleteRecord', false);
+      $('#deleteConfirmModal').modal('show');
+      console.log('Run on');
+
+      if (deleteRecord) {
+        this.$store.dispatch('deleteAddress', address);
+      }
+
+      console.log('deleteAddress got here');
     },
     showUpdateModal: function showUpdateModal(address) {
-      console.log('running copyAddressForRevert');
+      this.$store.dispatch('setSaveClicked', false);
       this.$store.dispatch('copyAddressForRevert', address);
-      console.log('ran copyAddressForRevert');
       this.$store.dispatch('getUpdateAddress', address);
       $('#txtAddress1').focus();
+      $('#addUpdateModal').modal({
+        backdrop: 'static',
+        keyboard: false
+      });
       $('#addUpdateModal').modal('show');
     },
     showCreateModal: function showCreateModal() {
@@ -2006,7 +2017,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       $('#addUpdateModal').modal('show');
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)(['addresses']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)(['addresses', 'deleteRecord']))
 });
 
 /***/ }),
@@ -2176,12 +2187,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.$store.dispatch('changeCircleSelect', addUpdateAddress);
     },
     cancelChange: function cancelChange(addUpdateAddress) {
-      console.log('Running cancelChange');
-      console.log('addUpdateAddress');
-      console.log(addUpdateAddress);
       this.$store.dispatch('revertAddress', addUpdateAddress);
       $("#addUpdateModal").modal("toggle");
-      console.log('cancelChange complete');
     }
   },
   computed: _objectSpread({
@@ -2420,6 +2427,67 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/utility/DeleteConfirm.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/utility/DeleteConfirm.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  methods: {
+    setDelete: function setDelete(value) {
+      this.$store.dispatch('deleteRecord', value);
+      $("#deleteConfirmModal").modal("toggle");
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -2466,7 +2534,8 @@ Vue.component('create-update-address', __webpack_require__(/*! ./components/addr
 Vue.component('addresses', __webpack_require__(/*! ./components/addresses/Addresses.vue */ "./resources/js/components/addresses/Addresses.vue").default);
 Vue.component('circles', __webpack_require__(/*! ./components/admin/circles/Circles.vue */ "./resources/js/components/admin/circles/Circles.vue").default);
 Vue.component('create-update-circle', __webpack_require__(/*! ./components/admin/circles/CreateUpdateCircle.vue */ "./resources/js/components/admin/circles/CreateUpdateCircle.vue").default);
-Vue.component('VueCtkDateTimePicker', (vue_ctk_date_time_picker__WEBPACK_IMPORTED_MODULE_3___default())); //Vue.component('VueGoodTable', VueGoodTable);
+Vue.component('VueCtkDateTimePicker', (vue_ctk_date_time_picker__WEBPACK_IMPORTED_MODULE_3___default()));
+Vue.component('delete-confirm', __webpack_require__(/*! ./components/utility/DeleteConfirm.vue */ "./resources/js/components/utility/DeleteConfirm.vue").default); //Vue.component('VueGoodTable', VueGoodTable);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -2598,13 +2667,8 @@ var actions = {
   },
   copyAddressForRevert: function copyAddressForRevert(_ref6, address) {
     var commit = _ref6.commit;
-    console.log('copyAddressForRevert');
-    console.log('address');
-    console.log(address);
     var JSONString = JSON.stringify(address);
     var JSONObj = JSON.parse(JSONString);
-    console.log('JSONObj');
-    console.log(JSONObj);
     commit('COPY_ADDRESS_FOR_REVERT', JSONObj);
   },
   revertAddress: function revertAddress(_ref7, address) {
@@ -2665,6 +2729,14 @@ var actions = {
   changeCircleSelect: function changeCircleSelect(_ref13, addOrUpdateAddress) {
     var commit = _ref13.commit;
     commit('CHANGE_CIRCLE_SELECT', addOrUpdateAddress);
+  },
+  setSaveClicked: function setSaveClicked(_ref14, setValue) {
+    var commit = _ref14.commit;
+    commit('SET_SAVE_CLICKED', setValue);
+  },
+  deleteRecord: function deleteRecord(_ref15, setValue) {
+    var commit = _ref15.commit;
+    commit('DELETE_RECORD', setValue);
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (actions);
@@ -2694,6 +2766,9 @@ var getters = {
   },
   addUpdateCircle: function addUpdateCircle(state) {
     return state.addUpdateCircle;
+  },
+  deleteRecord: function deleteRecord(state) {
+    return state.deleteRecord;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getters);
@@ -2767,9 +2842,6 @@ var mutations = {
     state.addUpdateAddress = address;
   },
   COPY_ADDRESS_FOR_REVERT: function COPY_ADDRESS_FOR_REVERT(state, address) {
-    console.log('COPY_ADDRESS_FOR_REVERT');
-    console.log('address');
-    console.log(address);
     state.revertAddress = address;
   },
   REVERT_ADDRESS: function REVERT_ADDRESS(state, address) {
@@ -2779,7 +2851,8 @@ var mutations = {
     address.st = state.revertAddress.st;
     address.zip = state.revertAddress.zip;
     address.county = state.revertAddress.county;
-    address.highestcricle = state.revertAddress.highestcricle;
+    address.country = state.revertAddress.country;
+    address.highestcircle = state.revertAddress.highestcircle;
     address.circle_info = state.revertAddress.circle_info;
     address.effectivedate = state.revertAddress.effectivedate;
     address.enddate = state.revertAddress.enddate;
@@ -2806,12 +2879,17 @@ var mutations = {
     state.addUpdateCircle = circle;
   },
   CHANGE_CIRCLE_SELECT: function CHANGE_CIRCLE_SELECT(state, addOrUpdateAddress) {
-    //let addressIndex = state.addresses.findIndex(item => item.id === args[0])
     var circleIndex = state.circles.findIndex(function (item) {
-      return item.circle_level === addOrUpdateAddress.highestcricle;
+      return item.circle_level === addOrUpdateAddress.highestcircle;
     });
     var circle_info = state.circles[circleIndex].circle_info;
     addOrUpdateAddress.circle_info = circle_info;
+  },
+  SET_SAVE_CLICKED: function SET_SAVE_CLICKED(state, setValue) {
+    state.saveClicked = setValue;
+  },
+  DELETE_RECORD: function DELETE_RECORD(state, setValue) {
+    state.deleteRecord = setValue;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (mutations);
@@ -2831,6 +2909,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var state = {
   addresses: [],
+  saveClicked: false,
+  deleteRecord: false,
   addUpdateAddress: {
     id: 0,
     street1: '',
@@ -75793,6 +75873,45 @@ component.options.__file = "resources/js/components/admin/circles/CreateUpdateCi
 
 /***/ }),
 
+/***/ "./resources/js/components/utility/DeleteConfirm.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/utility/DeleteConfirm.vue ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _DeleteConfirm_vue_vue_type_template_id_5fc4b0d7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DeleteConfirm.vue?vue&type=template&id=5fc4b0d7& */ "./resources/js/components/utility/DeleteConfirm.vue?vue&type=template&id=5fc4b0d7&");
+/* harmony import */ var _DeleteConfirm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./DeleteConfirm.vue?vue&type=script&lang=js& */ "./resources/js/components/utility/DeleteConfirm.vue?vue&type=script&lang=js&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! !../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+;
+var component = (0,_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__.default)(
+  _DeleteConfirm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__.default,
+  _DeleteConfirm_vue_vue_type_template_id_5fc4b0d7___WEBPACK_IMPORTED_MODULE_0__.render,
+  _DeleteConfirm_vue_vue_type_template_id_5fc4b0d7___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/utility/DeleteConfirm.vue"
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/addresses/Addresses.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/addresses/Addresses.vue?vue&type=script&lang=js& ***!
@@ -75854,6 +75973,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateCircle_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateUpdateCircle.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/circles/CreateUpdateCircle.vue?vue&type=script&lang=js&");
  /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateCircle_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
+
+/***/ }),
+
+/***/ "./resources/js/components/utility/DeleteConfirm.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/utility/DeleteConfirm.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DeleteConfirm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5[0].rules[0].use[0]!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/utility/DeleteConfirm.vue?vue&type=script&lang=js&");
+ /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_babel_loader_lib_index_js_clonedRuleSet_5_0_rules_0_use_0_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__.default); 
 
 /***/ }),
 
@@ -75921,6 +76056,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateCircle_vue_vue_type_template_id_2faea8ac___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
 /* harmony export */ });
 /* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUpdateCircle_vue_vue_type_template_id_2faea8ac___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./CreateUpdateCircle.vue?vue&type=template&id=2faea8ac& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/admin/circles/CreateUpdateCircle.vue?vue&type=template&id=2faea8ac&");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/utility/DeleteConfirm.vue?vue&type=template&id=5fc4b0d7&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/utility/DeleteConfirm.vue?vue&type=template&id=5fc4b0d7& ***!
+  \******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirm_vue_vue_type_template_id_5fc4b0d7___WEBPACK_IMPORTED_MODULE_0__.render),
+/* harmony export */   "staticRenderFns": () => (/* reexport safe */ _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirm_vue_vue_type_template_id_5fc4b0d7___WEBPACK_IMPORTED_MODULE_0__.staticRenderFns)
+/* harmony export */ });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_DeleteConfirm_vue_vue_type_template_id_5fc4b0d7___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib/index.js??vue-loader-options!./DeleteConfirm.vue?vue&type=template&id=5fc4b0d7& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/utility/DeleteConfirm.vue?vue&type=template&id=5fc4b0d7&");
 
 
 /***/ }),
@@ -76076,7 +76228,25 @@ var render = function() {
     [
       _c("div", { staticClass: "modal-dialog modal-lg" }, [
         _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "modal-header" }, [
+            _c("h4", { staticClass: "modal-title" }, [
+              _vm._v("Add/Edit Address")
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.cancelChange(_vm.addUpdateAddress)
+                  }
+                }
+              },
+              [_vm._v("×")]
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
             _c("div", { staticClass: "form-group" }, [
@@ -76311,7 +76481,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-6" }, [
@@ -76371,7 +76541,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-6" }, [
-                    _vm._m(2),
+                    _vm._m(1),
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
                       _c(
@@ -76399,7 +76569,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-6" }, [
-                    _vm._m(3),
+                    _vm._m(2),
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
                       _c(
@@ -76446,19 +76616,20 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-block btn-default",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.cancelChange(_vm.addUpdateAddress)
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-block btn-danger btn-default",
+                      on: {
+                        click: function($event) {
+                          return _vm.cancelChange(_vm.addUpdateAddress)
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("Close")]
-                )
+                    },
+                    [_vm._v("Close")]
+                  )
+                ])
               ])
             ])
           ])
@@ -76468,23 +76639,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c("h4", { staticClass: "modal-title" }, [_vm._v("Add/Edit Address")]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("×")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -76831,6 +76985,117 @@ var staticRenderFns = [
         },
         [_vm._v("×")]
       )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/utility/DeleteConfirm.vue?vue&type=template&id=5fc4b0d7&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib/index.js??vue-loader-options!./resources/js/components/utility/DeleteConfirm.vue?vue&type=template&id=5fc4b0d7& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render),
+/* harmony export */   "staticRenderFns": () => (/* binding */ staticRenderFns)
+/* harmony export */ });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: { id: "deleteConfirmModal", role: "dialog" }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c("h4", { staticClass: "modal-title" }, [
+              _vm._v("Confirm Delete")
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.setDelete(false)
+                  }
+                }
+              },
+              [_vm._v("×")]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c("div", { staticClass: "container" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-block btn-primary",
+                      on: {
+                        click: function($event) {
+                          return _vm.setDelete(true)
+                        }
+                      }
+                    },
+                    [_vm._v("Yes")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-block btn-danger btn-default",
+                      on: {
+                        click: function($event) {
+                          return _vm.setDelete(false)
+                        }
+                      }
+                    },
+                    [_vm._v("No")]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-body" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("p", [_vm._v("Are you sure you want to delete this record?")])
+            ])
+          ])
+        ])
+      ])
     ])
   }
 ]

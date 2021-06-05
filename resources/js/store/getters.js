@@ -10,6 +10,9 @@ let getters = {
   },
   addUpdateCircle: state => {
     return state.addUpdateCircle
+  },
+  deleteRecord: state => {
+    return state.deleteRecord
   }
 }
 

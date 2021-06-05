@@ -26,7 +26,8 @@ let mutations = {
     address.st = state.revertAddress.st
     address.zip = state.revertAddress.zip
     address.county = state.revertAddress.county
-    address.highestcricle = state.revertAddress.highestcricle
+    address.country = state.revertAddress.country
+    address.highestcircle = state.revertAddress.highestcircle
     address.circle_info = state.revertAddress.circle_info
     address.effectivedate = state.revertAddress.effectivedate
     address.enddate = state.revertAddress.enddate
@@ -49,9 +50,15 @@ let mutations = {
     state.addUpdateCircle = circle
   },
   CHANGE_CIRCLE_SELECT(state, addOrUpdateAddress) {
-    let circleIndex = state.circles.findIndex(item => item.circle_level === addOrUpdateAddress.highestcricle)
+    let circleIndex = state.circles.findIndex(item => item.circle_level === addOrUpdateAddress.highestcircle)
     let circle_info = state.circles[circleIndex].circle_info
     addOrUpdateAddress.circle_info = circle_info
+  },
+  SET_SAVE_CLICKED(state, setValue) {
+    state.saveClicked = setValue
+  },
+  DELETE_RECORD(state, setValue) {
+    state.deleteRecord = setValue
   }
 }
 export default mutations

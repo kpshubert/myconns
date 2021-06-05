@@ -1,5 +1,7 @@
 let state = {
   addresses: [],
+  saveClicked: false,
+  deleteRecord: false,
   addUpdateAddress: {
     id: 0,
     street1: '',

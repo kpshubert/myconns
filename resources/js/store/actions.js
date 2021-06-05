@@ -36,13 +36,8 @@ let actions = {
     commit('GET_UPDATE_ADDRESS', address)
   },
   copyAddressForRevert({commit}, address) {
-    console.log('copyAddressForRevert')
-    console.log('address')
-    console.log(address)
     let JSONString = JSON.stringify(address)
     let JSONObj = JSON.parse(JSONString)
-    console.log('JSONObj')
-    console.log(JSONObj)
     commit('COPY_ADDRESS_FOR_REVERT', JSONObj)
   },
   revertAddress({commit}, address) {
@@ -86,6 +81,12 @@ let actions = {
     },
     changeCircleSelect({commit}, addOrUpdateAddress) {
       commit('CHANGE_CIRCLE_SELECT', addOrUpdateAddress)
+    },
+    setSaveClicked({commit}, setValue) {
+      commit('SET_SAVE_CLICKED', setValue)
+    },
+    deleteRecord({commit}, setValue) {
+      commit('DELETE_RECORD', setValue)
     }
 }
 
