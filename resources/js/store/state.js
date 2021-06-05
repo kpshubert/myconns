@@ -10,7 +10,21 @@ let state = {
     county: '',
     country: '',
     effectivedate: '',
-    enddate: ''
+    enddate: '',
+    highestcircle: 0
+  },
+  revertAddress: {
+    id: 0,
+    street1: '',
+    street2: '',
+    city: '',
+    st: '',
+    zip: '',
+    county: '',
+    country: '',
+    effectivedate: '',
+    enddate: '',
+    highestcircle: 0
   },
   circles: [],
   addUpdateCircle: {

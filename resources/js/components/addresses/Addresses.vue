@@ -104,6 +104,9 @@
                     this.$store.dispatch('deleteAddress', address)
                 },
                 showUpdateModal(address) {
+                  console.log('running copyAddressForRevert')
+                  this.$store.dispatch('copyAddressForRevert', address)
+                  console.log('ran copyAddressForRevert')
                   this.$store.dispatch('getUpdateAddress', address)
                   $('#txtAddress1').focus()
                   $('#addUpdateModal').modal('show')

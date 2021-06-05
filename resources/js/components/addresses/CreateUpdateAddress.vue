@@ -53,7 +53,7 @@
                   Circle:
                 </div>
                 <div class="col-md-6">
-                  <select v-model="addUpdateAddress.highestcircle" @change="changeCircleSelect(addUpdateAddress.id, addUpdateAddress.highestcircle)">
+                  <select v-model="addUpdateAddress.highestcircle" @change="changeCircleSelect(addUpdateAddress)">
                     <option v-for="circle in circles" :value="circle.circle_level">{{circle.circle_info}}</option>
                   </select>
                 </div>
@@ -94,7 +94,7 @@
                 <button :disabled="!isValid" class="btn btn-block btn-primary" @click.prevent="addOrUpdateAddress(addUpdateAddress)">Submit</button>
               </div
               <div class="col-md-6">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-block btn-default" @click="cancelChange(addUpdateAddress)">Close</button>
               </div>
             </div>
           </div>
@@ -119,9 +119,13 @@
                     this.$store.dispatch('saveAddress', addUpdateAddress).then($("#addUpdateModal").modal("toggle"))
                   }
                 },
-                changeCircleSelect(addUpdateAddressId, circleId) {
-                  this.$store.dispatch('changeCircleSelect', [addUpdateAddressId, circleId])
-                }
+                changeCircleSelect(addUpdateAddress) {
+                  this.$store.dispatch('changeCircleSelect', addUpdateAddress)
+                },
+                cancelChange(addUpdateAddress) {
+                  this.$store.dispatch('revertAddress', addUpdateAddress)
+                  $("#addUpdateModal").modal("toggle")
+                },
              },
              computed: {
                  isValid() {

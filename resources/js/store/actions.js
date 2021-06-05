@@ -35,6 +35,19 @@ let actions = {
   getUpdateAddress({commit}, address) {
     commit('GET_UPDATE_ADDRESS', address)
   },
+  copyAddressForRevert({commit}, address) {
+    console.log('copyAddressForRevert')
+    console.log('address')
+    console.log(address)
+    let JSONString = JSON.stringify(address)
+    let JSONObj = JSON.parse(JSONString)
+    console.log('JSONObj')
+    console.log(JSONObj)
+    commit('COPY_ADDRESS_FOR_REVERT', JSONObj)
+  },
+  revertAddress({commit}, address) {
+    commit('REVERT_ADDRESS', address)
+  },
   createCircle({commit}, circle) {
     axios.post('/api/circle', circle)
       .then(res => {
@@ -71,8 +84,8 @@ let actions = {
     getUpdateCircle({commit}, circle) {
       commit('GET_UPDATE_CIRCLE', circle)
     },
-    changeCircleSelect({commit}, args) {
-      commit('CHANGE_CIRCLE_SELECT', [args[0], args[1]])
+    changeCircleSelect({commit}, addOrUpdateAddress) {
+      commit('CHANGE_CIRCLE_SELECT', addOrUpdateAddress)
     }
 }
 
