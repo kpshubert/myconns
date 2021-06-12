@@ -22,7 +22,7 @@
                   <button class="btn btn-success" @click="showUpdateModal(props.row)"><i style="color:white" class="fa fa-edit"></i></button>
                 </div>
                 <div class="col-md-6">
-                  <button class="btn btn-danger" @click="deleteAddress(props.row)"><i style="color:white" class="fa fa-trash"></i></button>
+                  <button class="btn btn-danger" @click="confirmDelete(props.row)"><i style="color:white" class="fa fa-trash"></i></button>
                 </div>
               </div>
             </span>
@@ -100,15 +100,16 @@
     }
     },
     methods: {
-                deleteAddress(address) {
-                    this.$store.dispatch('deleteAddress', address)
+                confirmDelete(address) {
+                    this.$store.dispatch('setDeleteObject', address)
+                    this.$store.dispatch('setDeleteAction', 'deleteAddress')
+                    $('#deleteConfirmModal').modal('show')
                 },
                 showUpdateModal(address) {
-                  console.log('running copyAddressForRevert')
                   this.$store.dispatch('copyAddressForRevert', address)
-                  console.log('ran copyAddressForRevert')
                   this.$store.dispatch('getUpdateAddress', address)
                   $('#txtAddress1').focus()
+                  $('#addUpdateModal').modal({backdrop: 'static', keyboard: false})
                   $('#addUpdateModal').modal('show')
                 },
                 showCreateModal() {
@@ -119,7 +120,7 @@
              },
     computed: {
                  ...mapGetters([
-                  'addresses'
+                  'addresses',
                 ])
             }
         };

@@ -32,6 +32,7 @@ Vue.component('addresses', require('./components/addresses/Addresses.vue').defau
 Vue.component('circles', require('./components/admin/circles/Circles.vue').default);
 Vue.component('create-update-circle', require('./components/admin/circles/CreateUpdateCircle.vue').default);
 Vue.component('VueCtkDateTimePicker', VueCtkDateTimePicker);
+Vue.component('delete-confirm', require('./components/utility/DeleteConfirm.vue').default);
 //Vue.component('VueGoodTable', VueGoodTable);
 /**
  * Next, we will create a fresh Vue application instance and attach it to

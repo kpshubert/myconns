@@ -1,5 +1,7 @@
 let state = {
   addresses: [],
+  deleteObject:{ id: 0},
+  deleteAction: '',
   addUpdateAddress: {
     id: 0,
     street1: '',

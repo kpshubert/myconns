@@ -11,16 +11,21 @@
    <div id="app">
 
        <div class="container">
-           <div class="row">
+         <div class="row">
+           <div class="col-md-12">
+             <delete-confirm></delete-confirm>
+           </div>
+         </div>
+         <div class="row">
+           <div class="col-md-12">
+             <create-update-address></create-update-address>
+         </div>
+         <div class="row">
              <div class="col-md-12">
-               <create-update-address></create-update-address>
-           </div>
-           <div class="row">
-               <div class="col-md-12">
-                   <addresses></addresses>
+                 <addresses></addresses>
 
-               </div>
-           </div>
+             </div>
+         </div>
        </div>
 
 

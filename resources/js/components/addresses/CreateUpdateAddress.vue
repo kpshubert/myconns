@@ -7,7 +7,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Add/Edit Address</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <button type="button" class="close" @click="cancelChange(addUpdateAddress)">&times;</button>
         </div>
         <div class="modal-body">
           <div class="form-group">
@@ -92,9 +92,9 @@
             <div class="row">
               <div class="col-md-6">
                 <button :disabled="!isValid" class="btn btn-block btn-primary" @click.prevent="addOrUpdateAddress(addUpdateAddress)">Submit</button>
-              </div
+              </div>
               <div class="col-md-6">
-                <button type="button" class="btn btn-block btn-default" @click="cancelChange(addUpdateAddress)">Close</button>
+                <button class="btn btn-block btn-danger btn-default" @click="cancelChange(addUpdateAddress)">Close</button>
               </div>
             </div>
           </div>

@@ -18,8 +18,9 @@ let actions = {
   deleteAddress({commit}, address) {
     axios.delete('/api/address/' + address.id)
       .then(res => {
-        if (res.data === 'ok')
-        commit('DELETE_ADDRESS', address)
+        if (res.data === 'ok') {
+          commit('DELETE_ADDRESS', address)
+        }
       }).catch(err => {
         console.log(err)
       })
@@ -36,13 +37,8 @@ let actions = {
     commit('GET_UPDATE_ADDRESS', address)
   },
   copyAddressForRevert({commit}, address) {
-    console.log('copyAddressForRevert')
-    console.log('address')
-    console.log(address)
     let JSONString = JSON.stringify(address)
     let JSONObj = JSON.parse(JSONString)
-    console.log('JSONObj')
-    console.log(JSONObj)
     commit('COPY_ADDRESS_FOR_REVERT', JSONObj)
   },
   revertAddress({commit}, address) {
@@ -86,6 +82,12 @@ let actions = {
     },
     changeCircleSelect({commit}, addOrUpdateAddress) {
       commit('CHANGE_CIRCLE_SELECT', addOrUpdateAddress)
+    },
+    setDeleteObject({commit}, object) {
+      commit('SET_DELETE_OBJECT', object)
+    },
+    setDeleteAction({commit}, actionName) {
+      commit('SET_DELETE_ACTION', actionName)
     }
 }
 
