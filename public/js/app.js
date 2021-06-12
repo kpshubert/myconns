@@ -1980,19 +1980,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     };
   },
   methods: {
-    deleteAddress: function deleteAddress(address) {
-      this.$store.dispatch('deleteRecord', false);
+    confirmDelete: function confirmDelete(address) {
+      this.$store.dispatch('setDeleteObject', address);
+      this.$store.dispatch('setDeleteAction', 'deleteAddress');
       $('#deleteConfirmModal').modal('show');
-      console.log('Run on');
-
-      if (deleteRecord) {
-        this.$store.dispatch('deleteAddress', address);
-      }
-
-      console.log('deleteAddress got here');
     },
     showUpdateModal: function showUpdateModal(address) {
-      this.$store.dispatch('setSaveClicked', false);
       this.$store.dispatch('copyAddressForRevert', address);
       this.$store.dispatch('getUpdateAddress', address);
       $('#txtAddress1').focus();
@@ -2017,7 +2010,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       $('#addUpdateModal').modal('show');
     }
   },
-  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)(['addresses', 'deleteRecord']))
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_2__.mapGetters)(['addresses']))
 });
 
 /***/ }),
@@ -2438,6 +2431,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2477,13 +2477,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   methods: {
-    setDelete: function setDelete(value) {
-      this.$store.dispatch('deleteRecord', value);
+    yesClicked: function yesClicked(deleteAction, deleteObject) {
+      this.$store.dispatch(deleteAction, deleteObject);
+      $("#deleteConfirmModal").modal("toggle");
+    },
+    closeDialog: function closeDialog() {
       $("#deleteConfirmModal").modal("toggle");
     }
-  }
+  },
+  computed: _objectSpread({}, (0,vuex__WEBPACK_IMPORTED_MODULE_0__.mapGetters)(['deleteAction', 'deleteObject']))
 });
 
 /***/ }),
@@ -2648,7 +2653,9 @@ var actions = {
   deleteAddress: function deleteAddress(_ref3, address) {
     var commit = _ref3.commit;
     axios["delete"]('/api/address/' + address.id).then(function (res) {
-      if (res.data === 'ok') commit('DELETE_ADDRESS', address);
+      if (res.data === 'ok') {
+        commit('DELETE_ADDRESS', address);
+      }
     })["catch"](function (err) {
       console.log(err);
     });
@@ -2730,13 +2737,13 @@ var actions = {
     var commit = _ref13.commit;
     commit('CHANGE_CIRCLE_SELECT', addOrUpdateAddress);
   },
-  setSaveClicked: function setSaveClicked(_ref14, setValue) {
+  setDeleteObject: function setDeleteObject(_ref14, object) {
     var commit = _ref14.commit;
-    commit('SET_SAVE_CLICKED', setValue);
+    commit('SET_DELETE_OBJECT', object);
   },
-  deleteRecord: function deleteRecord(_ref15, setValue) {
+  setDeleteAction: function setDeleteAction(_ref15, actionName) {
     var commit = _ref15.commit;
-    commit('DELETE_RECORD', setValue);
+    commit('SET_DELETE_ACTION', actionName);
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (actions);
@@ -2767,8 +2774,11 @@ var getters = {
   addUpdateCircle: function addUpdateCircle(state) {
     return state.addUpdateCircle;
   },
-  deleteRecord: function deleteRecord(state) {
-    return state.deleteRecord;
+  deleteObject: function deleteObject(state) {
+    return state.deleteObject;
+  },
+  deleteAction: function deleteAction(state) {
+    return state.deleteAction;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (getters);
@@ -2885,11 +2895,11 @@ var mutations = {
     var circle_info = state.circles[circleIndex].circle_info;
     addOrUpdateAddress.circle_info = circle_info;
   },
-  SET_SAVE_CLICKED: function SET_SAVE_CLICKED(state, setValue) {
-    state.saveClicked = setValue;
+  SET_DELETE_OBJECT: function SET_DELETE_OBJECT(state, object) {
+    state.deleteObject = object;
   },
-  DELETE_RECORD: function DELETE_RECORD(state, setValue) {
-    state.deleteRecord = setValue;
+  SET_DELETE_ACTION: function SET_DELETE_ACTION(state, deleteAction) {
+    state.deleteAction = deleteAction;
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (mutations);
@@ -2909,8 +2919,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 var state = {
   addresses: [],
-  saveClicked: false,
-  deleteRecord: false,
+  deleteObject: {
+    id: 0
+  },
+  deleteAction: '',
   addUpdateAddress: {
     id: 0,
     street1: '',
@@ -76165,7 +76177,7 @@ var render = function() {
                                 staticClass: "btn btn-danger",
                                 on: {
                                   click: function($event) {
-                                    return _vm.deleteAddress(props.row)
+                                    return _vm.confirmDelete(props.row)
                                   }
                                 }
                               },
@@ -77051,7 +77063,10 @@ var render = function() {
                       staticClass: "btn btn-block btn-primary",
                       on: {
                         click: function($event) {
-                          return _vm.setDelete(true)
+                          return _vm.yesClicked(
+                            _vm.deleteAction,
+                            _vm.deleteObject
+                          )
                         }
                       }
                     },
@@ -77066,7 +77081,7 @@ var render = function() {
                       staticClass: "btn btn-block btn-danger btn-default",
                       on: {
                         click: function($event) {
-                          return _vm.setDelete(false)
+                          return _vm.closeDialog()
                         }
                       }
                     },

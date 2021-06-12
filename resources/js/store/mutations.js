@@ -54,11 +54,11 @@ let mutations = {
     let circle_info = state.circles[circleIndex].circle_info
     addOrUpdateAddress.circle_info = circle_info
   },
-  SET_SAVE_CLICKED(state, setValue) {
-    state.saveClicked = setValue
+  SET_DELETE_OBJECT(state, object) {
+    state.deleteObject = object
   },
-  DELETE_RECORD(state, setValue) {
-    state.deleteRecord = setValue
+  SET_DELETE_ACTION(state, deleteAction) {
+    state.deleteAction = deleteAction
   }
 }
 export default mutations

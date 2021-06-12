@@ -18,8 +18,9 @@ let actions = {
   deleteAddress({commit}, address) {
     axios.delete('/api/address/' + address.id)
       .then(res => {
-        if (res.data === 'ok')
-        commit('DELETE_ADDRESS', address)
+        if (res.data === 'ok') {
+          commit('DELETE_ADDRESS', address)
+        }
       }).catch(err => {
         console.log(err)
       })
@@ -82,11 +83,11 @@ let actions = {
     changeCircleSelect({commit}, addOrUpdateAddress) {
       commit('CHANGE_CIRCLE_SELECT', addOrUpdateAddress)
     },
-    setSaveClicked({commit}, setValue) {
-      commit('SET_SAVE_CLICKED', setValue)
+    setDeleteObject({commit}, object) {
+      commit('SET_DELETE_OBJECT', object)
     },
-    deleteRecord({commit}, setValue) {
-      commit('DELETE_RECORD', setValue)
+    setDeleteAction({commit}, actionName) {
+      commit('SET_DELETE_ACTION', actionName)
     }
 }
 

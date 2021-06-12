@@ -24,10 +24,10 @@
           <div class="container">
             <div class="row">
               <div class="col-md-6">
-                <button class="btn btn-block btn-primary" @click="setDelete(true)">Yes</button>
+                <button class="btn btn-block btn-primary" @click="yesClicked(deleteAction, deleteObject)">Yes</button>
               </div>
               <div class="col-md-6">
-                <button class="btn btn-block btn-danger btn-default" @click="setDelete(false)">No</button>
+                <button class="btn btn-block btn-danger btn-default" @click="closeDialog()">No</button>
               </div>
             </div>
           </div>
@@ -38,12 +38,23 @@
 </template>
 
 <script>
+  import { mapGetters } from 'vuex'
   export default {
     methods: {
-                setDelete(value) {
-                  this.$store.dispatch('deleteRecord', value)
+                yesClicked(deleteAction, deleteObject) {
+                  this.$store.dispatch(deleteAction, deleteObject)
+                  $("#deleteConfirmModal").modal("toggle")
+                },
+                closeDialog() {
                   $("#deleteConfirmModal").modal("toggle")
                 }
-             }
+             },
+    computed: {
+                ...mapGetters([
+                    'deleteAction',
+                    'deleteObject'
+                ])
+              }
+
   }
 </script>
